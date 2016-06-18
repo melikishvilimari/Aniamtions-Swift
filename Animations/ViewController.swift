@@ -84,7 +84,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func animateButtonTapped(sender: UIButton) {
-        animate5()
+        animate1()
     }
     
     func a() {

@@ -12,12 +12,15 @@ class SecondViewController: UIViewController {
 //        view.addSubview(customImageView)
         
         
-        customView.backgroundColor = UIColor.purpleColor()
-        customView.layer.borderColor = UIColor.greenColor().CGColor
+        customView.backgroundColor = UIColor.redColor()
+//        customView.layer.cornerRadius = customView.frame.width / 2
+        customView.layer.borderColor = UIColor.blackColor().CGColor
         customView.layer.borderWidth = 4
         customView.layer.shadowColor = UIColor.redColor().CGColor
-        customView.layer.shadowOffset = CGSize(width: 5, height: 5)
-        customView.layer.shadowOpacity = 1
+        customView.layer.shadowOffset = CGSize(width: 15, height: 15)
+        customView.layer.shadowOpacity = 0.5
+        
+        
         customView.center = view.center
         view.addSubview(customView)
     }
@@ -87,42 +90,119 @@ class SecondViewController: UIViewController {
     
     func animate4() {
         
-        let animation = CABasicAnimation(keyPath: "position.x")
-        animation.fromValue = view.center.x
-        animation.toValue = 300
-        animation.duration = 1
+//        let animation = CABasicAnimation(keyPath: "backgroundColor")
+//        animation.fromValue = UIColor.redColor().CGColor
+//        animation.toValue = UIColor.greenColor().CGColor
+//        animation.duration = 2
+//        animation.repeatCount = 1
+//        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+//        animation.removedOnCompletion = false
+//        animation.fillMode = kCAFillModeForwards
+//        customView.layer.addAnimation(animation, forKey: nil)
+        
+        
+//        let animation1 = CABasicAnimation(keyPath: "cornerRadius")
+//        animation1.fromValue = customView.frame.width / 2
+//        animation1.toValue = 2
+//        animation1.duration = 1
+//        animation1.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+//        animation1.removedOnCompletion = false
+//        animation1.fillMode = kCAFillModeForwards
+//        customView.layer.addAnimation(animation1, forKey: nil)
+        
+        
+//
+//        let animation2 = CABasicAnimation(keyPath: "borderColor")
+//        animation2.fromValue = UIColor.blackColor().CGColor
+//        animation2.toValue = UIColor.blueColor().CGColor
+//        animation2.duration = 4
+//        animation2.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+//        animation2.removedOnCompletion = false
+//        animation2.fillMode = kCAFillModeForwards
+//        customView.layer.addAnimation(animation2, forKey: nil)
+
+        
+        
+//        let animation3 = CABasicAnimation(keyPath: "borderWidth")
+//        animation3.fromValue = 4
+//        animation3.toValue = 20
+//        animation3.duration = 1
+//        animation3.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+//        animation3.removedOnCompletion = false
+//        animation3.fillMode = kCAFillModeForwards
+//        customView.layer.addAnimation(animation3, forKey: nil)
+        
+//        let group = CAAnimationGroup()
+//        group.duration = 1
+//        group.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+//        group.beginTime = CACurrentMediaTime() + 0.5
+//        group.fillMode = kCAFillModeForwards
+//        group.removedOnCompletion = false
+//        group.delegate = self
+//        group.setValue("group", forKey: "group")
+//        group.setValue(customView.layer, forKey: "layer")
+//        
+//        let scale = CABasicAnimation(keyPath: "transform.scale")
+//        scale.fromValue = 1
+//        scale.toValue = 2
+//        
+//        let rotation = CABasicAnimation(keyPath: "transform.rotation")
+//        rotation.fromValue = CGFloat(0)
+//        rotation.toValue = CGFloat(2 * M_PI)
+//        
+//        group.animations = [scale, rotation]
+//        customView.layer.addAnimation(group, forKey: nil)
+        
+//        let layer = customView.layer
+//        let point1 = CGPoint(
+//            x: layer.bounds.width / 2,
+//            y: layer.bounds.height / 2)
+//        let point2 = view.center
+//        let point3 = CGPoint(
+//            x: view.frame.width - layer.bounds.width / 2,
+//            y: layer.bounds.height / 2)
+//        layer.position = point1
+//        let animation = CAKeyframeAnimation(keyPath: "position")
+//        animation.duration = 4
+//        animation.keyTimes = [0, 0.4, 0.8, 1]
+//        animation.values = [
+//            point1,
+//            point2,
+//            point3,
+//            point1
+//        ].map { NSValue(CGPoint: $0) }
+//        
+//        customView.layer.addAnimation(animation, forKey: nil)
+        
+        let path = UIBezierPath()
+        let bounds = customView.bounds
+        path.moveToPoint(CGPoint(x: 4, y: bounds.height / 2))
+        path.addLineToPoint(CGPoint(x: bounds.width / 2 - 2, y: bounds.height - 4))
+        path.addLineToPoint(CGPoint(x: bounds.width - 4, y: 12))
+        
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = path.CGPath
+        shapeLayer.strokeColor = UIColor.whiteColor().CGColor
+        shapeLayer.lineWidth = 2.5
+        shapeLayer.fillColor = UIColor.clearColor().CGColor
+        customView.layer.addSublayer(shapeLayer)
+        
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
+        animation.duration = 2
+        animation.fromValue = 0
+        animation.toValue = 1
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-        animation.removedOnCompletion = false
         animation.fillMode = kCAFillModeForwards
-        customView.layer.addAnimation(animation, forKey: nil)
+        animation.removedOnCompletion = false
+        shapeLayer.addAnimation(animation, forKey: nil)
+    }
+    
+    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+        guard let _ = anim.valueForKey("group") as? String, layer = anim.valueForKey("layer") as? CALayer else {
+            return
+        }
         
-        let animation1 = CABasicAnimation(keyPath: "shadowOpacity")
-        animation1.fromValue = 1
-        animation1.toValue = 0.5
-        animation1.duration = 1
-        animation1.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-        animation1.removedOnCompletion = false
-        animation1.fillMode = kCAFillModeForwards
-        customView.layer.addAnimation(animation1, forKey: nil)
-        
-        let animation2 = CABasicAnimation(keyPath: "shadowOffset.height")
-        animation2.fromValue = 5
-        animation2.toValue = 50
-        animation2.duration = 1
-        animation2.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-        animation2.removedOnCompletion = false
-        animation2.fillMode = kCAFillModeForwards
-        customView.layer.addAnimation(animation2, forKey: nil)
-        
-        let animation3 = CABasicAnimation(keyPath: "shadowOffset.width")
-        animation3.fromValue = 5
-        animation3.toValue = -50
-        animation3.duration = 1
-        animation3.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-        animation3.removedOnCompletion = false
-        animation3.fillMode = kCAFillModeForwards
-        customView.layer.addAnimation(animation3, forKey: nil)
-        
+        layer.cornerRadius = 20
     }
     
     @IBAction func animate(sender: UIButton) {
